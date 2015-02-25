@@ -46,17 +46,6 @@ npm install --save react-tweenable
 
 ```
 
-This will render the JSX representation, with all the props (explicit + default) merged:
-
-```
-
-    <div>This is a test</div>
-    <SomeComponent
-        prop1={...}
-        prop2={...} />
-
-```
-
 ## Props
 
 ### tween={Object}
