@@ -1,5 +1,6 @@
 var React = require('react/addons'),
-  Button = require('./Button.jsx');
+  Button = require('./Button.jsx'),
+  JSXView = require('react-jsx-view');
 
 var App = React.createClass({
 
@@ -33,7 +34,15 @@ var App = React.createClass({
                 {sample}
               </div>
             </div>
+          </div>
 
+          <div className="col-lg-6">
+            <div className="panel panel-default">
+              <div className="panel-heading"><h4 className="panel-title">{"JSX"}</h4></div>
+              <div className="panel-body">
+                <JSXView>{sample}</JSXView>
+              </div>
+            </div>
           </div>
         </div>
       </div>
