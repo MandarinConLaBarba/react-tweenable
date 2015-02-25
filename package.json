@@ -19,7 +19,7 @@
     "react-tween-state": "0.0.4"
   },
   "peerDependencies": {
-    "react": "^0.13.0"
+    "react": "^0.12.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
