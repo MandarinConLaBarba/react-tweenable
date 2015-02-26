@@ -17,13 +17,31 @@ npm install --save react-tweenable
 
 ## General Usage
 
+### Component
+
+```
+var React = require('react');
+
+var Tweenable = require('react-tweenable')
+
+
+//Then in your render:
+
+var tween = {"top" : {from : -100, to: 0 }, "position": "relative};
+
+return <Tweenable tween={tween}><div>...some content</div></Tweenable>;
+
+```
+
+### Mixin
+
 ```
 
 //A tweenable button
 
 var React = require('react/addons');
 
-var Tweenable = require('react-tweenable');
+var Tweenable = require('react-tweenable').Mixin;
 
 var Button = React.createClass({
 

@@ -1,6 +1,6 @@
 var React = require('react/addons');
 
-var Tweenable = require('../index');
+var Tweenable = require('../index').Mixin;
 
 var Button = React.createClass({
 
