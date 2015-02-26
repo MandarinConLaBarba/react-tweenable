@@ -61,7 +61,11 @@ var initialState = {
 var App = React.createClass({
 
   getInitialState: function() {
-    return assign(clone(initialState), {nodeTween: initialNodeTweenState});
+    return assign(clone(initialState), {
+      nodeTween: initialNodeTweenState,
+      propDetails1: "Hover over props to the right to inspect",
+      propDetails2: "Hover over props to the right to inspect"
+    });
   },
 
   render: function() {
@@ -84,20 +88,38 @@ var App = React.createClass({
         </div>
 
         <div className="row">
-          <div className="col-lg-4">
-            <div className="panel panel-default">
-              <div className="panel-heading"><h4 className="panel-title">{"Components"}</h4></div>
-              <div className="panel-body">
+
+          <div className="col-lg-6">
+            <div className="row">
+
+              <div className="col-lg-8">
+                <div className="panel panel-default">
+                  <div className="panel-heading"><h4 className="panel-title">{"Components"}</h4></div>
+                  <div className="panel-body">
                 {sampleNode}
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4">
+
+                <div className="panel panel-default">
+                  <div className="panel-body text-center">
+                    <h4>Click</h4>
+                    <span onClick={this._replayNodeTween} className="fa fa-4x fa-caret-square-o-right"></span>
+                  </div>
+                </div>
+
               </div>
             </div>
-          </div>
 
-          <div className="col-lg-2">
-            <div className="panel panel-default">
-              <div className="panel-body text-center">
-                <h4>Click</h4>
-                <span onClick={this._replayNodeTween} className="fa fa-4x fa-caret-square-o-right"></span>
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="panel panel-default">
+                  <div className="panel-body text-center">
+                    <code>{this._getPropDetailString(this.state.propDetails1)}</code>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -106,7 +128,7 @@ var App = React.createClass({
             <div className="panel panel-default">
               <div className="panel-heading"><h4 className="panel-title">{"JSX"}</h4></div>
               <div className="panel-body">
-                <JSXView>{sampleNode}</JSXView>
+                <JSXView onPropMouseOver={function(details) { this.setState({propDetails1: details})}.bind(this)}>{sampleNode}</JSXView>
               </div>
             </div>
           </div>
@@ -119,20 +141,38 @@ var App = React.createClass({
         </div>
 
         <div className="row">
-          <div className="col-lg-4">
-            <div className="panel panel-default">
-              <div className="panel-heading"><h4 className="panel-title">{"Components"}</h4></div>
-              <div className="panel-body">
+
+          <div className="col-lg-6">
+            <div className="row">
+
+              <div className="col-lg-8">
+                <div className="panel panel-default">
+                  <div className="panel-heading"><h4 className="panel-title">{"Components"}</h4></div>
+                  <div className="panel-body">
                 {sampleMixin}
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4">
+
+                <div className="panel panel-default">
+                  <div className="panel-body text-center">
+                    <h4>Click</h4>
+                    <span onClick={this._scatterButtons} className="fa fa-4x fa-caret-square-o-right"></span>
+                  </div>
+                </div>
+
               </div>
             </div>
-          </div>
 
-          <div className="col-lg-2">
-            <div className="panel panel-default">
-              <div className="panel-body text-center">
-                <h4>Click</h4>
-                <span onClick={this._scatterButtons} className="fa fa-4x fa-caret-square-o-right"></span>
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="panel panel-default">
+                  <div className="panel-body text-center">
+                    <code>{this._getPropDetailString(this.state.propDetails2)}</code>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -141,13 +181,23 @@ var App = React.createClass({
             <div className="panel panel-default">
               <div className="panel-heading"><h4 className="panel-title">{"JSX"}</h4></div>
               <div className="panel-body">
-                <JSXView>{sampleMixin}</JSXView>
+                <JSXView onPropMouseOver={function(details) { this.setState({propDetails2: details})}.bind(this)}>{sampleMixin}</JSXView>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     );
+  },
+
+  _getPropDetailString: function (details) {
+
+    if (typeof details === "object") return JSON.stringify(details);
+    if (typeof details === "function") return details.toString();
+
+    return details;
+
   },
 
   _scatterButtons: function () {

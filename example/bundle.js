@@ -62,7 +62,11 @@ var initialState = {
 var App = React.createClass({displayName: "App",
 
   getInitialState: function() {
-    return assign(clone(initialState), {nodeTween: initialNodeTweenState});
+    return assign(clone(initialState), {
+      nodeTween: initialNodeTweenState,
+      propDetails1: "Hover over props to the right to inspect",
+      propDetails2: "Hover over props to the right to inspect"
+    });
   },
 
   render: function() {
@@ -85,20 +89,38 @@ var App = React.createClass({displayName: "App",
         ), 
 
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-lg-4"}, 
-            React.createElement("div", {className: "panel panel-default"}, 
-              React.createElement("div", {className: "panel-heading"}, React.createElement("h4", {className: "panel-title"}, "Components")), 
-              React.createElement("div", {className: "panel-body"}, 
-                sampleNode
-              )
-            )
-          ), 
 
-          React.createElement("div", {className: "col-lg-2"}, 
-            React.createElement("div", {className: "panel panel-default"}, 
-              React.createElement("div", {className: "panel-body text-center"}, 
-                React.createElement("h4", null, "Click"), 
-                React.createElement("span", {onClick: this._replayNodeTween, className: "fa fa-4x fa-caret-square-o-right"})
+          React.createElement("div", {className: "col-lg-6"}, 
+            React.createElement("div", {className: "row"}, 
+
+              React.createElement("div", {className: "col-lg-8"}, 
+                React.createElement("div", {className: "panel panel-default"}, 
+                  React.createElement("div", {className: "panel-heading"}, React.createElement("h4", {className: "panel-title"}, "Components")), 
+                  React.createElement("div", {className: "panel-body"}, 
+                sampleNode
+                  )
+                )
+              ), 
+
+              React.createElement("div", {className: "col-lg-4"}, 
+
+                React.createElement("div", {className: "panel panel-default"}, 
+                  React.createElement("div", {className: "panel-body text-center"}, 
+                    React.createElement("h4", null, "Click"), 
+                    React.createElement("span", {onClick: this._replayNodeTween, className: "fa fa-4x fa-caret-square-o-right"})
+                  )
+                )
+
+              )
+            ), 
+
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-lg-12"}, 
+                React.createElement("div", {className: "panel panel-default"}, 
+                  React.createElement("div", {className: "panel-body text-center"}, 
+                    React.createElement("code", null, this._getPropDetailString(this.state.propDetails1))
+                  )
+                )
               )
             )
           ), 
@@ -107,7 +129,7 @@ var App = React.createClass({displayName: "App",
             React.createElement("div", {className: "panel panel-default"}, 
               React.createElement("div", {className: "panel-heading"}, React.createElement("h4", {className: "panel-title"}, "JSX")), 
               React.createElement("div", {className: "panel-body"}, 
-                React.createElement(JSXView, null, sampleNode)
+                React.createElement(JSXView, {onPropMouseOver: function(details) { this.setState({propDetails1: details})}.bind(this)}, sampleNode)
               )
             )
           )
@@ -120,20 +142,38 @@ var App = React.createClass({displayName: "App",
         ), 
 
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-lg-4"}, 
-            React.createElement("div", {className: "panel panel-default"}, 
-              React.createElement("div", {className: "panel-heading"}, React.createElement("h4", {className: "panel-title"}, "Components")), 
-              React.createElement("div", {className: "panel-body"}, 
-                sampleMixin
-              )
-            )
-          ), 
 
-          React.createElement("div", {className: "col-lg-2"}, 
-            React.createElement("div", {className: "panel panel-default"}, 
-              React.createElement("div", {className: "panel-body text-center"}, 
-                React.createElement("h4", null, "Click"), 
-                React.createElement("span", {onClick: this._scatterButtons, className: "fa fa-4x fa-caret-square-o-right"})
+          React.createElement("div", {className: "col-lg-6"}, 
+            React.createElement("div", {className: "row"}, 
+
+              React.createElement("div", {className: "col-lg-8"}, 
+                React.createElement("div", {className: "panel panel-default"}, 
+                  React.createElement("div", {className: "panel-heading"}, React.createElement("h4", {className: "panel-title"}, "Components")), 
+                  React.createElement("div", {className: "panel-body"}, 
+                sampleMixin
+                  )
+                )
+              ), 
+
+              React.createElement("div", {className: "col-lg-4"}, 
+
+                React.createElement("div", {className: "panel panel-default"}, 
+                  React.createElement("div", {className: "panel-body text-center"}, 
+                    React.createElement("h4", null, "Click"), 
+                    React.createElement("span", {onClick: this._scatterButtons, className: "fa fa-4x fa-caret-square-o-right"})
+                  )
+                )
+
+              )
+            ), 
+
+            React.createElement("div", {className: "row"}, 
+              React.createElement("div", {className: "col-lg-12"}, 
+                React.createElement("div", {className: "panel panel-default"}, 
+                  React.createElement("div", {className: "panel-body text-center"}, 
+                    React.createElement("code", null, this._getPropDetailString(this.state.propDetails2))
+                  )
+                )
               )
             )
           ), 
@@ -142,13 +182,23 @@ var App = React.createClass({displayName: "App",
             React.createElement("div", {className: "panel panel-default"}, 
               React.createElement("div", {className: "panel-heading"}, React.createElement("h4", {className: "panel-title"}, "JSX")), 
               React.createElement("div", {className: "panel-body"}, 
-                React.createElement(JSXView, null, sampleMixin)
+                React.createElement(JSXView, {onPropMouseOver: function(details) { this.setState({propDetails2: details})}.bind(this)}, sampleMixin)
               )
             )
           )
         )
+
       )
     );
+  },
+
+  _getPropDetailString: function (details) {
+
+    if (typeof details === "object") return JSON.stringify(details);
+    if (typeof details === "function") return details.toString();
+
+    return details;
+
   },
 
   _scatterButtons: function () {
@@ -1733,44 +1783,36 @@ var elementTypes = "a abbr address area article aside audio b base bdi bdo big b
 
 var margin = 30;
 
-var JSXRenderer = React.createClass({displayName: "JSXRenderer",
+var JSXView = React.createClass({displayName: "JSXView",
 
   propTypes: {
-    excludedAttributes : React.PropTypes.array
+    excludedAttributes: React.PropTypes.array,
+    onPropMouseOver: React.PropTypes.func
   },
 
   getDefaultProps: function () {
     return {
-      excludedAttributes: []
+      excludedAttributes: [],
+      onPropMouseOver: function (propDetails) {
+        console.log("Prop details:");
+        console.log(propDetails);
+      }
     };
   },
 
   getInitialState: function () {
-    return {
-      propDetail: null
-    }
+    return {}
   },
 
   render: function () {
 
     return (
       React.createElement("div", {style: {position: "relative"}}, 
-        this._getPropDetailNode(), 
         React.createElement("code", null, 
           this._getChildren()
         )
       )
     );
-  },
-
-  _getPropDetailNode: function () {
-
-    if (!this.state.propDetail) return null;
-
-    var styles = {position: "absolute"};
-
-    return React.createElement("div", {style: styles});
-
   },
 
   _getChildren: function (children) {
@@ -1791,8 +1833,11 @@ var JSXRenderer = React.createClass({displayName: "JSXRenderer",
         markupLiteral = this._getEmptyNode(child)
         var grandkids = child.props.children;
 
-        if (grandkids && grandkids.length) {
-          markupLiteral = this._getNodeWithChildren(child);
+        if (grandkids) {
+          if (!Array.isArray(grandkids)) grandkids = [grandkids];
+          if (grandkids.length) {
+            markupLiteral = this._getNodeWithChildren(child);
+          }
         }
       }
 
@@ -1866,33 +1911,37 @@ var JSXRenderer = React.createClass({displayName: "JSXRenderer",
     for (var prop in child.props) {
       if (child.props.hasOwnProperty(prop)) {
         if (excluded.indexOf(prop) >= 0) continue;
-        var leftSide = child.props[prop];
+        var rightSide = child.props[prop];
 
-        var typeOf = typeof leftSide;
+        var typeOf = typeof rightSide;
 
         if (typeOf === "string") {
-          leftSide = "\"" + leftSide + "\"";
+          rightSide = "\"" + rightSide + "\"";
         } else if (typeOf === "boolean" || typeOf === "number") {
           //nothing to do
         } else if (typeOf === "function") {
-          leftSide = "function(){}"
-        } else if (Array.isArray(leftSide)) {
-          leftSide = "[]";
+          rightSide = this._getPropDetailLinkNode("function(){}", rightSide);;
+        } else if (Array.isArray(rightSide)) {
+          rightSide = "[]";
         } else {
-          leftSide = "{}";
+          rightSide = this._getPropDetailLinkNode("...", rightSide);
         }
 
-        leftSide = "{" + leftSide + "}";
+        rightSide = typeof rightSide === "string" ? "{" + rightSide + "}" : ["{", rightSide, "}"];
 
-        keyVals.push([prop, "=", leftSide].join(""));
+        keyVals.push([prop, "=", rightSide]);
       }
     }
 
-    if (keyVals.length && appendCloser) keyVals[keyVals.length - 1] = keyVals[keyVals.length - 1] + appendCloser;
-
-    return keyVals.map(function (keyVal) {
-      return React.createElement("div", null, keyVal);
+    return keyVals.map(function (keyVal, indx) {
+      var closerNode = null;
+      if (appendCloser && indx === (keyVals.length - 1)) closerNode = appendCloser;
+      return React.createElement("div", null, keyVal, React.createElement("span", null, closerNode));
     });
+  },
+
+  _getPropDetailLinkNode: function (text, content) {
+    return React.createElement("a", {onMouseOver: this.props.onPropMouseOver.bind(null, content)}, text);
   },
 
   _getClosingNode: function (child) {
@@ -1921,7 +1970,7 @@ var JSXRenderer = React.createClass({displayName: "JSXRenderer",
 
 });
 
-module.exports = JSXRenderer;
+module.exports = JSXView;
 
 },{"react/addons":23}],21:[function(require,module,exports){
 'use strict';
