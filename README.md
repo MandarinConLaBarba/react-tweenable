@@ -19,29 +19,29 @@ npm install --save react-tweenable
 
 ```
 
-    //A tweenable button
+//A tweenable button
 
-    var React = require('react/addons');
+var React = require('react/addons');
 
-    var Tweenable = require('react-tweenable');
+var Tweenable = require('react-tweenable');
 
-    var Button = React.createClass({
+var Button = React.createClass({
 
-      mixins: [Tweenable],
+  mixins: [Tweenable],
 
-      render: function () {
-        return <button style={this.state.tweenStyle}>Submit</button>
-      }
-    });
+  render: function () {
+    return <button style={this.state.tweenStyle}>Submit</button>
+  }
+});
 
-    //Then in your consumer component
+//Then in your consumer component
 
-    render: function() {
+render: function() {
 
-        var tween = {"top" : {from : -100, to: 0 }};
+    var tween = {"top" : {from : -100, to: 0 }};
 
-        return <Button tween={tween} />;
-    }
+    return <Button tween={tween} />;
+}
 
 
 ```
@@ -56,14 +56,13 @@ Example:
 
 ```
 
-    var tween = {
-                    "top" : {
-                        easing: tweenState.easingTypes.easeInOutQuad, //any easing function will do see https://github.com/chenglou/react-tween-state/blob/master/easingTypes.js
-                        duration: 500,
-                        beginValue: 0,
-                        endValue: 100
-                    }
-                };
+var tween = {"top" : {
+                easing: tweenState.easingTypes.easeInOutQuad, //any easing function will do see https://github.com/chenglou/react-tween-state/blob/master/easingTypes.js
+                duration: 500,
+                from: 0,
+                to: 100
+                }
+            };
 
 ```
 
