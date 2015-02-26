@@ -5,6 +5,13 @@ var invariant = require('react/lib/invariant');
 
 var TweenableMixin = extend({
 
+  componentWillReceiveProps: function (nextProps) {
+
+    if (nextProps.tween && nextProps.tween !== this.props.tween) {
+      this._startTween();
+    }
+  },
+
   componentWillUpdate: function (nextProps, nextState) {
 
     var props = this.props;
@@ -30,6 +37,7 @@ var TweenableMixin = extend({
     for (var tween in tweenProps) {
 
       if(!tweenProps.hasOwnProperty(tween)) continue;
+      if (typeof tweenProps[tween] !== "object") continue;
       ret[tween] = handler(tweenProps[tween], this._getTweenKey(tween));
 
     }
@@ -46,9 +54,7 @@ var TweenableMixin = extend({
     return 'tween_' + str;
   },
 
-  componentDidMount: function () {
-
-    if (!this.props.tween) return;
+  _startTween: function () {
 
     this._eachTween(function (tweenSettings, tweenKey) {
       var to = tweenSettings.to || tweenSettings.endValue,
@@ -63,6 +69,14 @@ var TweenableMixin = extend({
       });
 
     });
+
+  },
+
+  componentDidMount: function () {
+
+    if (!this.props.tween) return;
+
+    this._startTween();
 
   }
 }, tweenState.Mixin);

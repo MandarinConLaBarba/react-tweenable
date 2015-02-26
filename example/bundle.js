@@ -3,10 +3,53 @@ var React = require('react/addons'),
   Button = require('./Button.jsx'),
   JSXView = require('react-jsx-view');
 
+var initialState = {
+  buttonOneTween: {
+    "top" : {
+      from : -100,
+      to: 0
+    },
+    "left" : {
+      from : -100,
+      to: 0
+    }
+  },
+  buttonTwoTween: {
+    "top" : {
+      from : 100,
+      to: 0
+    },
+    "left" : {
+      from : 100,
+      to: 0
+    }
+  },
+  buttonThreeTween: {
+    "top" : {
+      from : -100,
+      to: 0
+    },
+    "opacity" : {
+      from : 0,
+      to: 1
+    }
+  },
+  buttonFourTween: {
+    "top" : {
+      from : 100,
+      to: 0
+    },
+    "opacity" : {
+      from : 0,
+      to: 1
+    }
+  }
+};
+
 var App = React.createClass({displayName: "App",
 
   getInitialState: function() {
-    return {};
+    return initialState;
   },
 
   render: function() {
@@ -28,11 +71,19 @@ var App = React.createClass({displayName: "App",
         ), 
 
         React.createElement("div", {className: "row"}, 
-          React.createElement("div", {className: "col-lg-6"}, 
+          React.createElement("div", {className: "col-lg-4"}, 
             React.createElement("div", {className: "panel panel-default"}, 
               React.createElement("div", {className: "panel-heading"}, React.createElement("h4", {className: "panel-title"}, "Components")), 
               React.createElement("div", {className: "panel-body"}, 
                 sample
+              )
+            )
+          ), 
+
+          React.createElement("div", {className: "col-lg-2"}, 
+            React.createElement("div", {className: "panel panel-default"}, 
+              React.createElement("div", {className: "panel-body text-center"}, 
+                React.createElement("span", {onClick: this._scatterButtons, className: "fa fa-4x fa-caret-square-o-right"})
               )
             )
           ), 
@@ -50,50 +101,51 @@ var App = React.createClass({displayName: "App",
     );
   },
 
+  _scatterButtons: function () {
+
+    this.setState({
+      buttonOneTween: {
+        "top" : {
+          from : 0,
+          to: -100
+        },
+        "left" : {
+          from : 0,
+          to: -100
+        }
+      },
+      buttonTwoTween: {
+        "top" : {
+          from : 0,
+          to: 100
+        },
+        "left" : {
+          from : 0,
+          to: 100
+        }
+      },
+      buttonThreeTween: {
+        "top" : {
+          from : 0,
+          to: -100
+        }
+      },
+      buttonFourTween: {
+        "top" : {
+          from : 0,
+          to: 100
+        }}
+    });
+  },
+
   _getSample: function () {
 
     return (
       React.createElement("div", {className: "btn-group-vertical btn-group-lg text-center"}, 
-        this._getButtonNode("Destroy the Replicants", {
-          "top" : {
-            from : -100,
-            to: 0
-          },
-          "left" : {
-            from : -100,
-            to: 0
-          }
-        }), 
-        this._getButtonNode("Save the Replicants", {
-          "top" : {
-            from : 100,
-            to: 0
-          },
-          "left" : {
-            from : 100,
-            to: 0
-          }
-        }), 
-        this._getButtonNode("Travel to the Offworld", {
-          "top" : {
-            from : -100,
-            to: 0
-          },
-          "opacity" : {
-            from : 0,
-            to: 1
-          }
-        }), 
-        this._getButtonNode("Play Chess with Sebastian", {
-          "top" : {
-            from : 100,
-            to: 0
-          },
-          "opacity" : {
-            from : 0,
-            to: 1
-          }
-        })
+        this._getButtonNode("Destroy the Replicants", this.state.buttonOneTween), 
+        this._getButtonNode("Save the Replicants", this.state.buttonTwoTween), 
+        this._getButtonNode("Travel to the Offworld", this.state.buttonThreeTween), 
+        this._getButtonNode("Play Chess with Sebastian", this.state.buttonFourTween)
       )
     );
   },
@@ -20699,6 +20751,13 @@ var invariant = require('react/lib/invariant');
 
 var TweenableMixin = extend({
 
+  componentWillReceiveProps: function (nextProps) {
+
+    if (nextProps.tween && nextProps.tween !== this.props.tween) {
+      this._startTween();
+    }
+  },
+
   componentWillUpdate: function (nextProps, nextState) {
 
     var props = this.props;
@@ -20740,9 +20799,7 @@ var TweenableMixin = extend({
     return 'tween_' + str;
   },
 
-  componentDidMount: function () {
-
-    if (!this.props.tween) return;
+  _startTween: function () {
 
     this._eachTween(function (tweenSettings, tweenKey) {
       var to = tweenSettings.to || tweenSettings.endValue,
@@ -20757,6 +20814,14 @@ var TweenableMixin = extend({
       });
 
     });
+
+  },
+
+  componentDidMount: function () {
+
+    if (!this.props.tween) return;
+
+    this._startTween();
 
   }
 }, tweenState.Mixin);
