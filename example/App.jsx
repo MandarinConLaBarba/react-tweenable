@@ -28,6 +28,10 @@ var initialState = {
       from : -100,
       to: 0
     },
+    "left" : {
+      from : 100,
+      to: 0
+    },
     "opacity" : {
       from : 0,
       to: 1
@@ -36,6 +40,10 @@ var initialState = {
   buttonFourTween: {
     "top" : {
       from : 100,
+      to: 0
+    },
+    "left" : {
+      from : -100,
       to: 0
     },
     "opacity" : {
@@ -82,6 +90,7 @@ var App = React.createClass({
           <div className="col-lg-2">
             <div className="panel panel-default">
               <div className="panel-body text-center">
+                <h4>Click</h4>
                 <span onClick={this._scatterButtons} className="fa fa-4x fa-caret-square-o-right"></span>
               </div>
             </div>
@@ -135,6 +144,10 @@ var App = React.createClass({
           to: 100
         }}
     });
+
+    setTimeout(function () {
+      this.setState(initialState);
+    }.bind(this), 400)
   },
 
   _getSample: function () {

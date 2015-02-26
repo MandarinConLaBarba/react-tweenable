@@ -29,6 +29,10 @@ var initialState = {
       from : -100,
       to: 0
     },
+    "left" : {
+      from : 100,
+      to: 0
+    },
     "opacity" : {
       from : 0,
       to: 1
@@ -37,6 +41,10 @@ var initialState = {
   buttonFourTween: {
     "top" : {
       from : 100,
+      to: 0
+    },
+    "left" : {
+      from : -100,
       to: 0
     },
     "opacity" : {
@@ -83,6 +91,7 @@ var App = React.createClass({displayName: "App",
           React.createElement("div", {className: "col-lg-2"}, 
             React.createElement("div", {className: "panel panel-default"}, 
               React.createElement("div", {className: "panel-body text-center"}, 
+                React.createElement("h4", null, "Click"), 
                 React.createElement("span", {onClick: this._scatterButtons, className: "fa fa-4x fa-caret-square-o-right"})
               )
             )
@@ -136,6 +145,10 @@ var App = React.createClass({displayName: "App",
           to: 100
         }}
     });
+
+    setTimeout(function () {
+      this.setState(initialState);
+    }.bind(this), 400)
   },
 
   _getSample: function () {
@@ -20754,7 +20767,7 @@ var TweenableMixin = extend({
   componentWillReceiveProps: function (nextProps) {
 
     if (nextProps.tween && nextProps.tween !== this.props.tween) {
-      this._startTween();
+      this._startTween(nextProps);
     }
   },
 
@@ -20774,15 +20787,16 @@ var TweenableMixin = extend({
 
   },
 
-  _eachTween: function (func, map) {
+  _eachTween: function (func, map, props) {
 
-    var tweenProps = this.props.tween,
+    var tweenProps = props.tween,
       handler = func.bind(this),
       ret = {};
 
     for (var tween in tweenProps) {
 
       if(!tweenProps.hasOwnProperty(tween)) continue;
+      if (typeof tweenProps[tween] !== "object") continue;
       ret[tween] = handler(tweenProps[tween], this._getTweenKey(tween));
 
     }
@@ -20792,14 +20806,16 @@ var TweenableMixin = extend({
   },
 
   _mapTween: function (func) {
-    return this._eachTween(func, true);
+    return this._eachTween(func, true, this.props);
   },
 
   _getTweenKey: function (str) {
     return 'tween_' + str;
   },
 
-  _startTween: function () {
+  _startTween: function (props) {
+
+    props = props || this.props;
 
     this._eachTween(function (tweenSettings, tweenKey) {
       var to = tweenSettings.to || tweenSettings.endValue,
@@ -20813,7 +20829,7 @@ var TweenableMixin = extend({
         endValue: tweenSettings.to
       });
 
-    });
+    }, false, props);
 
   },
 
