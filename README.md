@@ -23,7 +23,7 @@ npm install --save react-tweenable
 
     var React = require('react/addons');
 
-    var Tweenable = require('../index');
+    var Tweenable = require('react-tweenable');
 
     var Button = React.createClass({
 
