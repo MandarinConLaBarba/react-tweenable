@@ -1,6 +1,6 @@
-## React Tweenable Mixin
+## React Tweenable
 
-A simple mixin that wraps the excellent [react-tween-state](https://github.com/chenglou/react-tween-state).
+A simple component and mixin that wraps the excellent [react-tween-state](https://github.com/chenglou/react-tween-state).
 
 ## Please check out the [Demo](http://mandarinconlabarba.github.io/react-tweenable/example/index.html).
 
