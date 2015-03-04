@@ -31,6 +31,7 @@
     "grunt-browserify": "^3.3.0",
     "grunt-contrib-watch": "^0.6.1",
     "lodash.clone": "^3.0.1",
+    "lodash.clonedeep": "^3.0.0",
     "react": "^0.12.0",
     "react-jsx-view": "^1.0.2",
     "reactify": "^1.0.0"
