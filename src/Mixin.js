@@ -18,12 +18,12 @@ var TweenableMixin = extend({
 
     if (!props.tween) return;
 
-    nextState.tweenStyle = this._mapTween(function (tweenSettings, tweenKey) {
+    nextState.tweenable = this._mapTween(function (tweenSettings, tweenKey) {
       return this.getTweeningValue(tweenKey);
     });
 
     if (props.tween.position) {
-      nextState.tweenStyle.position = props.tween.position;
+      nextState.tweenable.position = props.tween.position;
     }
 
   },

@@ -21,7 +21,7 @@ var Tweenable = React.createClass({
     var props = this.props;
 
 
-    return (React.createElement(props.component, {style: this.state.tweenStyle}, this.props.children));
+    return (React.createElement(props.component, {style: this.state.tweenable}, this.props.children));
   }
 
 });

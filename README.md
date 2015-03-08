@@ -48,7 +48,7 @@ var Button = React.createClass({
   mixins: [Tweenable],
 
   render: function () {
-    return <button style={this.state.tweenStyle}>Submit</button>
+    return <button style={this.state.tweenable}>Submit</button>
   }
 });
 
@@ -75,7 +75,7 @@ Example:
 ```
 
 var tween = {"top" : {
-                easing: tweenState.easingTypes.easeInOutQuad, //any easing function will do see https://github.com/chenglou/react-tween-state/blob/master/easingTypes.js
+                easing: Tweenable.Easing.easeInOutQuad, //any easing function with the right signature will do, `react-tween-state` provides plenty https://github.com/chenglou/react-tween-state/blob/master/easingTypes.js
                 duration: 500,
                 from: 0,
                 to: 100

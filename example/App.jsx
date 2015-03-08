@@ -1,5 +1,6 @@
 var React = require('react/addons'),
   Button = require('./Button.jsx'),
+  Percentage = require('./Percentage.jsx'),
   JSXView = require('react-jsx-view'),
   Tweenable = require('../index'),
   clone = require('lodash.clone'),
@@ -110,6 +111,13 @@ var initialState = {
       from : 0,
       to: 1
     }
+  },
+  percentageTween: {
+    "value" : {
+      from: 0,
+      to: 1,
+      duration: 1000
+    }
   }
 };
 
@@ -128,7 +136,8 @@ var App = React.createClass({
 
     var simpleExample = this._getNodeSample(),
       simpleExample2 = this._getNodeSample2(),
-      simpleExampleMixin = this._getMixinSample();
+      simpleExampleMixin = this._getMixinSample(),
+      simpleExampleMixin2 = this._getMixinSample2();
 
     return (
       <div className="container">
@@ -251,7 +260,7 @@ var App = React.createClass({
 
               <div className="col-lg-8">
                 <div className="panel panel-default">
-                  <div className="panel-heading"><h4 className="panel-title">{"Components"}</h4></div>
+                  <div className="panel-heading"><h4 className="panel-title">{"Tweening Styles"}</h4></div>
                   <div className="panel-body">
                     {simpleExampleMixin}
                   </div>
@@ -286,6 +295,53 @@ var App = React.createClass({
               <div className="panel-heading"><h4 className="panel-title">{"JSX"}</h4></div>
               <div className="panel-body">
                 <JSXView onPropMouseOver={function(details) { this.setState({propDetails3: details})}.bind(this)}>{simpleExampleMixin}</JSXView>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+
+          <div className="col-lg-6">
+            <div className="row">
+
+              <div className="col-lg-8">
+                <div className="panel panel-default">
+                  <div className="panel-heading"><h4 className="panel-title">{"Tweening Values"}</h4></div>
+                  <div className="panel-body">
+                    {simpleExampleMixin2}
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-lg-4">
+
+                <div className="panel panel-default">
+                  <div className="panel-body text-center">
+                    <h4>Click</h4>
+                    <span onClick={this._resetPercentage} className="fa fa-4x fa-caret-square-o-right"></span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="panel panel-default">
+                  <div className="panel-body text-center">
+                    <code>{this._getPropDetailString(this.state.propDetails4)}</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-6">
+            <div className="panel panel-default">
+              <div className="panel-heading"><h4 className="panel-title">{"JSX"}</h4></div>
+              <div className="panel-body">
+                <JSXView onPropMouseOver={function(details) { this.setState({propDetails4: details})}.bind(this)}>{simpleExampleMixin2}</JSXView>
               </div>
             </div>
           </div>
@@ -361,6 +417,19 @@ var App = React.createClass({
 
   },
 
+  _resetPercentage: function () {
+    var oldState = this.state.percentageTween.value,
+      newState = assign(cloneDeep(oldState), {
+      from: oldState.from ? 0 : 1,
+      to: oldState.to ? 0 : 1
+    });
+    this.setState({
+      percentageTween : {
+        value: newState
+      }
+    });
+  },
+
   _getNodeSample: function () {
     return (
       <Tweenable tween={this.state.nodeTween}>
@@ -396,6 +465,14 @@ var App = React.createClass({
         {this._getButtonNode("Play Chess with Sebastian", this.state.buttonFourTween)}
       </div>
     );
+  },
+
+  _getMixinSample2: function () {
+
+    return (
+      <Percentage tween={this.state.percentageTween} />
+    );
+
   },
 
   _getButtonNode: function (text, tween) {
