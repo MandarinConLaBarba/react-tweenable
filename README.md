@@ -19,7 +19,7 @@ npm install --save react-tweenable
 
 ### Component
 
-```
+```es
 var React = require('react');
 
 var Tweenable = require('react-tweenable')
@@ -35,7 +35,7 @@ return <Tweenable tween={tween}><div>...some content</div></Tweenable>;
 
 ### Mixin
 
-```
+```es
 
 //A tweenable button
 
@@ -72,7 +72,7 @@ Your tween config
 
 Example:
 
-```
+```es
 
 var tween = {"top" : {
                 easing: Tweenable.Easing.easeInOutQuad, //any easing function with the right signature will do, `react-tween-state` provides plenty https://github.com/chenglou/react-tween-state/blob/master/easingTypes.js
